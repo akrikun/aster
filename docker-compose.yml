@@ -1,0 +1,24 @@
+version: '3' 
+services:
+  asterisk:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: asterisk-newrecord
+    restart: always
+    volumes:
+      - ./asterisk:/etc/sysconfig/asterisk
+      - ./asterisk.conf:/etc/asterisk/asterisk.conf
+      - ./sip.conf:/etc/asterisk/sip.conf
+      - ./extensions.conf:/etc/asterisk/extensions.conf
+      - ./logs:/var/log/asterisk:rw
+      - ./musiconhold.conf:/etc/asterisk/musiconhold.conf
+      - ./dw.ulaw:/var/lib/asterisk/moh/1/dw.ulaw
+      - ./res_odbc.conf:/etc/asterisk/res_odbc.conf
+      - ./cdr_adaptive_odbc.conf:/etc/asterisk/cdr_adaptive_odbc.conf
+      - ./cdr.conf:/etc/asterisk/cdr.conf
+      - ./cdr_mysql.conf:/etc/asterisk/cdr_mysql.conf
+      - ./calls:/mnt/calls:rw
+    network_mode: "host"
+    environment:
+      - TZ=Europe/Moscow
